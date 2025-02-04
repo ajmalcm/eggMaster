@@ -15,8 +15,6 @@ export default function Chat() {
   const [d6, setD6] = useState(false);
   const [d7, setD7] = useState(false);
 
-
-  const [audioStarted, setAudioStarted] = useState(false); 
   const notify = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
