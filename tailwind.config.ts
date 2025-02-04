@@ -12,6 +12,11 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily:{
+        fredoka: ["Fredoka", "sans-serif"],
+        pixel_p2:["Press Start 2P", "cursive"],
+        comic:["Comic Neue", "cursive"]
+      }
     },
   },
   plugins: [],
