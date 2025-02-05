@@ -5,6 +5,8 @@ import MessageBubble from "./MessageBox";
 import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
 import CharacterSelection from "./CharacterSelection";
+import { useRouter } from "next/navigation";
+import Chat2 from "./Chat2";
 
 export default function Chat() {
   const [d1, setD1] = useState(false);
@@ -14,6 +16,11 @@ export default function Chat() {
   const [d5, setD5] = useState(false);
   const [d6, setD6] = useState(false);
   const [d7, setD7] = useState(false);
+  const [d8, setD8] = useState(false);
+
+  const [type, setType] = useState("");
+
+  const router = useRouter();
 
   const notify = useRef<HTMLAudioElement | null>(null);
 
@@ -42,30 +49,55 @@ export default function Chat() {
     }, 1300);
   };
 
-  const startHandler=()=>{
-    setTimeout(()=>{
+  const startHandler = () => {
+    setTimeout(() => {
       setD5(false);
-    },500)
-    setTimeout(()=>{
+    }, 500);
+    setTimeout(() => {
       setD4(false);
-    },800)
-    setTimeout(()=>{
+    }, 800);
+    setTimeout(() => {
       setD2(false);
-    },1100)
-    setTimeout(()=>{
+    }, 1100);
+    setTimeout(() => {
       setD1(false);
-    },1400)
-    setTimeout(()=>{
+    }, 1400);
+    setTimeout(() => {
       setD6(true);
-    },1900)
+    }, 1900);
     notify.current?.play();
-    setTimeout(()=>{
+    setTimeout(() => {
       setD7(true);
-    },1300)
-  }
+    }, 1300);
+  };
 
-  const onSelection=()=>{
-     
+  const onSelection = (route: string) => {
+    setTimeout(() => {
+      setD7(false);
+    }, 700);
+    setTimeout(() => {
+      setD6(false);
+      setD8(true);
+    }, 1200);
+
+    setType(route);
+  };
+
+  const goBack = () => {
+    setTimeout(() => {
+      setD6(true);
+      setD8(false);
+    }, 700);
+    setTimeout(() => {
+      setD7(true);
+    }, 1200);
+  };
+
+  const getRecipe=()=>{
+    setTimeout(()=>{
+      setD8(false);
+      router.push(`Boil/${type}`)
+    },600)
   }
 
   return (
@@ -162,10 +194,9 @@ export default function Chat() {
             </button>
           </motion.div>
         )}
-      {
-          d7&&
-          (<CharacterSelection/>)  
-        }
+        {d7 && <CharacterSelection onSelection={onSelection} />}
+        {d8 && <Chat2 type={type} goBack={goBack} getRecipe={getRecipe}/>}
+       
       </AnimatePresence>
 
       {/* Correct audio path */}

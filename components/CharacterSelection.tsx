@@ -15,7 +15,7 @@ const eggCharacters = [
   { id: "overcooked", name: "Over-cooked", image: Over, dialogue: "Help... I'm a rubbery mess! 🥲" },
 ];
 
-export default function CharacterSelection() {
+export default function CharacterSelection({onSelection}:{onSelection:Function}) {
   const [selected, setSelected] = useState<string | null>(null);
   const [hovered, setHovered] = useState<string | null>(null);
   const hoverRef=useRef<HTMLAudioElement | null>(null);
@@ -29,10 +29,10 @@ export default function CharacterSelection() {
     setHovered(null);
   }
 
-  const selectionHandler=()=>{
-    
+  const onSelect=(id:string)=>{
+    setSelected(id);
+    onSelection(id);
   }
-
 
   return (
     <div className="flex justify-center items-center p-6">
@@ -48,7 +48,7 @@ export default function CharacterSelection() {
             className={`relative p-4 rounded-2xl bg-white shadow-lg cursor-pointer transition-all ${
               selected === egg.id ? "scale-110 shadow-xl border-2 border-yellow-500" : "hover:scale-105"
             }`}
-            onClick={() => setSelected(egg.id)}
+            onClick={() => onSelect(egg.id)}
             onMouseEnter={() => mouseEnter(egg.id)}
             onMouseLeave={mouseLeave}
             initial={{ opacity: 0, y: 50 }}
