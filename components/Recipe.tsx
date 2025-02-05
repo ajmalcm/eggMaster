@@ -6,19 +6,22 @@ import Runny from "@/public/assets/runny-removebg-preview.png";
 import Soft from "@/public/assets/soft-removebg-preview.png";
 import Hard from "@/public/assets/hardegg-removebg-preview.png";
 import Over from "@/public/assets/overcokkedegg-removebg-preview.png";
+import * as motion from "motion/react-client";
+import { useRouter } from "next/navigation";
 
 const Recipe = ({ type }: { type: string }) => {
   const [instructions, setInstructions] = useState<string[]>([]);
   const [title, setTitle] = useState("");
   const [time, setTime] = useState("");
-  const [icon,setIcon]=useState<string | any>();
+  const [icon, setIcon] = useState<string | any>();
+  const router = useRouter();
 
   const eggBoilingGuide = [
     {
       type: "runny",
       title: "Runny Yolk",
       time: "4-5 minutes",
-      icon:Runny,
+      icon: Runny,
       description: "Soft and wobbly yolk, perfect for dipping toast or ramen.",
       instructions: [
         "Bring water to a rolling boil.",
@@ -32,7 +35,7 @@ const Recipe = ({ type }: { type: string }) => {
       type: "soft",
       title: "Soft-Boiled",
       time: "6-7 minutes",
-      icon:Soft,
+      icon: Soft,
       description:
         "Slightly set whites with a jammy center, ideal for ramen and salads.",
       instructions: [
@@ -47,7 +50,7 @@ const Recipe = ({ type }: { type: string }) => {
       type: "hard",
       title: "Hard-Boiled",
       time: "9-12 minutes",
-      icon:Hard,
+      icon: Hard,
       description:
         "Firm whites and fully set yolk, great for meal prep or deviled eggs.",
       instructions: [
@@ -62,7 +65,7 @@ const Recipe = ({ type }: { type: string }) => {
       type: "overcooked",
       title: "Overcooked",
       time: "14+ minutes",
-      icon:Over,
+      icon: Over,
       description:
         "Dry, chalky yolk with a greenish-gray tint. You’ve gone too far.",
       instructions: [
@@ -85,24 +88,59 @@ const Recipe = ({ type }: { type: string }) => {
     }
   }, [type]);
 
+  const startHandler = () => {
+    router.push(`/timer/${type}`);
+  };
+
   return (
-    <div className="max-w-md mx-auto bg-white shadow-lg rounded-xl p-6 mt-6 font-pixel_p2 text-xs">
+    <>
+    <div className="max-w-md mx-auto bg-white shadow-lg rounded-xl p-6 mt-6 font-pixel_p2 text-xs flex flex-col gap-8">
+      <motion.div
+        initial={{ opacity: 0, translateY: -10 }}
+        animate={{ opacity: 1, translateY: 1 }}
+        exit={{ opacity: 0, translateY: -10 }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+        key="box"
+      >
         <div className=" flex justify-center items-center gap-8">
-      <h2 className="text-xs font-bold text-center mb-2">{title}</h2>
-    <Image src={icon || Runny} alt="type" width={50} height={50} objectFit="contain"/>
+          <h2 className="text-xs font-bold text-center mb-2">{title}</h2>
+          <Image
+            src={icon || Runny}
+            alt="type"
+            width={50}
+            height={50}
+            objectFit="contain"
+          />
         </div>
-      <p className="text-gray-600 text-center mb-4">{time}</p>
-      <ul className="space-y-3">
-        {instructions.map((step, i) => (
-          <li key={i} className="flex gap-2 items-start font-fredoka text-xl">
-            <span className="bg-blue-500 text-white px-2 py-1 rounded-full text-xs">
-              {i + 1}
-            </span>
-            <p className="text-gray-800">{step}</p>
-          </li>
-        ))}
-      </ul>
+        <p className="text-gray-600 text-center mb-4">{time}</p>
+        <ul className="space-y-3 py-8 md:py-3">
+          {instructions.map((step, i) => (
+            <li key={i} className="flex gap-2 items-start font-fredoka text-xl">
+              <span className="bg-blue-500 text-white px-2 py-1 rounded-full text-xs">
+                {i + 1}
+              </span>
+              <p className="text-gray-800">{step}</p>
+            </li>
+          ))}
+        </ul>
+      </motion.div>
     </div>
+      <motion.div
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0 }}
+        key="box5"
+        className="w-full flex justify-center items-center"
+      >
+        <button
+          onClick={startHandler}
+          type="button"
+          className="bg-blue-400 outline-none border-none rounded-md p-3 text-xs text-white font-pixel_p2 my-8 md:my-3"
+        >
+          START TIMER
+        </button>
+      </motion.div>
+    </>
   );
 };
 
