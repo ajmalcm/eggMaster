@@ -49,13 +49,13 @@ const Recipe = ({ type }: { type: string }) => {
     {
       type: "hard",
       title: "Hard-Boiled",
-      time: "9-12 minutes",
+      time: "8-10 minutes",
       icon: Hard,
       description:
         "Firm whites and fully set yolk, great for meal prep or deviled eggs.",
       instructions: [
         "Bring water to a rolling boil.",
-        "Add eggs gently and boil for 9-12 minutes.",
+        "Add eggs gently and boil for 8-10 minutes.",
         "Immediately place eggs in an ice bath for at least 5 minutes.",
         "Peel under running water for easy removal.",
         "Use for salads, meal prep, or snacks.",
@@ -64,14 +64,14 @@ const Recipe = ({ type }: { type: string }) => {
     {
       type: "overcooked",
       title: "Overcooked",
-      time: "14+ minutes",
+      time: "12+ minutes",
       icon: Over,
       description:
         "Dry, chalky yolk with a greenish-gray tint. You’ve gone too far.",
       instructions: [
         "Bring water to a rolling boil.",
-        "Add eggs gently and boil for 9-12 minutes.",
-        "Boil eggs for 14+ minutes while contemplating your life choices.",
+        "Add eggs gently and boil.",
+        "Boil eggs for 12+ minutes while contemplating your life choices.",
         "Notice the yolk turning dry and crumbly.",
         "Accept that your egg is now best suited for sad sandwiches or as an example of what *not* to do.",
       ],

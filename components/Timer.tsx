@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import ProgressDialogues from "./ProgressDialogues";
 
-const Timer = ({ time }: { time: string }) => {
+const Timer = ({ time ,type}: { time: string,type:string }) => {
   const [secondsLeft, setSecondsLeft] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
 
@@ -42,12 +43,7 @@ const Timer = ({ time }: { time: string }) => {
         >
            Start
         </button>
-        <button
-          className="bg-yellow-500 text-white px-4 py-2 rounded-md"
-          onClick={() => setIsRunning(false)}
-        >
-           Pause
-        </button>
+        
         <button
           className="bg-red-500 text-white px-4 py-2 rounded-md"
           onClick={() => setSecondsLeft(parseInt(time.split("-")[0]) * 60)}
@@ -55,6 +51,7 @@ const Timer = ({ time }: { time: string }) => {
            Reset
         </button>
       </div>
+       <ProgressDialogues type={type}/>
     </div>
   );
 };
