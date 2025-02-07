@@ -14,8 +14,8 @@ import Message from "./Message";
 const Timer = ({ time ,type}: { time: string,type:string }) => {
   const [secondsLeft, setSecondsLeft] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
-  const [d1,setD1]=useState("");
-  const [d3,setD2]=useState("");
+  const [d1,setD1]=useState(false);
+  const [d2,setD2]=useState(false);
       const [m1,setM1]=useState("");
       const [m2,setM2]=useState("");
   
@@ -56,6 +56,7 @@ const Timer = ({ time ,type}: { time: string,type:string }) => {
     const minTime = parseInt(time.split("-")[0]) * 60;
     setSecondsLeft(minTime);
     setIsRunning(false);
+   
   }, [time]);
 
   useEffect(() => {
@@ -64,11 +65,16 @@ const Timer = ({ time ,type}: { time: string,type:string }) => {
       timer = setInterval(() => {
         setSecondsLeft((prev) => prev - 1);
       }, 1000);
-    } else if (secondsLeft === 0 && isRunning) {
+    } 
+  else if (secondsLeft === 0 && isRunning) {
       alert("⏰ Time’s up! Your egg is ready! 🍳");
       setIsRunning(false);
     }
+    
+    
     return () => clearInterval(timer);
+
+
   }, [isRunning, secondsLeft]);
 
   const formatTime = (seconds: number) => {
@@ -77,13 +83,23 @@ const Timer = ({ time ,type}: { time: string,type:string }) => {
     return `${minutes}:${secs.toString().padStart(2, "0")}`;
   };
 
+
+  const setMessages=()=>{
+    setIsRunning(true);
+    console.log(parseInt(time)*60);
+    console.log((parseInt(time)* 60)/2);
+    setTimeout(()=>{
+      setD1(true);
+      setM1("half time")
+    },(parseInt(time)*60/2)*1000)
+  }
   return (
     <div className="text-center mt-4">
       <h3 className="text-xl font-semibold">⏳ Timer: {formatTime(secondsLeft)}</h3>
       <div className="flex gap-4 justify-center my-6">
         <button
           className="bg-green-500 text-white px-4 py-2 rounded-md"
-          onClick={() => setIsRunning(true)}
+          onClick={setMessages}
         >
            Start
         </button>
@@ -96,13 +112,19 @@ const Timer = ({ time ,type}: { time: string,type:string }) => {
         </button>
       </div>
       <div className='flex items-center justify-center w-full relative'>
-        <div className="absolute left-1/4 top-10 font-fredoka text-xl">
-        <Message text="boiling started" align="left"/>
+        {
+d1 &&
+        <div className="absolute md:left-[12%] left-[3%] top-14 font-fredoka text-xl">
+        <Message text={m1} align="left"/>
         </div>
-        <div className="absolute right-1/4 top-2 font-fredoka text-xl">
+        }
+        {
+          d2 &&
+        <div className="absolute md:right-[10%] right-[5%] top-8 font-fredoka text-xl">
         <Message text='boiling nicely and staedy' align="right"/>
         </div>
-        <Image src={Boil} alt="boil" className='bg-yellow-50 rounded-md' objectFit='contain'/>
+        }
+        <Image src={Boil} alt="boil" className=' rounded-md my-10 md:my-0' objectFit='contain'/>
     </div>
     </div>
   );

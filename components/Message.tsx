@@ -3,12 +3,12 @@ import React from 'react'
 
 const Message = ({align,text}:{align:string,text:string}) => {
 
-    const props=align==="left"?'bg-pink-100 opacity-80 p-3 font-fredoka text-sm rounded-xl rounded-br-sm max-w-[200px]':"bg-white font-fredoka text-sm p-3 rounded-xl rounded-bl-sm  max-w-[200px]"
+    const props=align==="left"?'bg-pink-100 opacity-80 p-3 font-fredoka text-sm rounded-xl rounded-br-sm max-w-[200px]':"bg-white font-fredoka text-sm p-3 rounded-xl rounded-bl-sm  max-w-[200px] bg-blue-100 opacity-80"
 
   return (
     <>
     <AnimatePresence>
-        <motion.div
+    <motion.div
     initial={{ opacity: 0, scale: 0.5, y: -10 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.5, y: -10 }}
