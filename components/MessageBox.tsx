@@ -19,7 +19,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ text, sender = "them" }) 
         {/* Tail / Swoosh effect */}
         <div
           className={`absolute bottom-0 w-3 h-3 
-            ${sender === "me" ? "right-0 -mr-1 bg-blue-500 rotate-45 rounded-br-md" : "left-0 -ml-1 bg-gray-200 rotate-45 rounded-bl-md"}
+            ${sender === "me" ? "right-3 -mr-1 bg-blue-500 rotate-45 rounded-br-md" : "left-3 -ml-1 bg-gray-200 rotate-45 rounded-bl-md"}
           `}
         />
       </div>

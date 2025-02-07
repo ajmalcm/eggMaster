@@ -1,12 +1,13 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Runny from "@/public/assets/runny-removebg-preview.png";
 import Soft from "@/public/assets/soft-removebg-preview.png";
 import Hard from "@/public/assets/hardegg-removebg-preview.png";
 import Over from "@/public/assets/overcokkedegg-removebg-preview.png";
 import Image from "next/image";
+import ThoughtBubble from "./ThoughtBubble";
 
 const eggCharacters = [
   { id: "runny", name: "Runny Yolk", image: Runny, dialogue: "Still gooey inside! 🍳" },
@@ -36,11 +37,12 @@ export default function CharacterSelection({onSelection}:{onSelection:Function})
 
   return (
     <div className="flex justify-center items-center p-6">
+      <AnimatePresence>
       <motion.div
         className="grid grid-cols-2 gap-3 md:gap-6"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.2, ease: "easeIn" }}
+        transition={{ duration: 0.7, ease: "easeIn" }}
       >
         {eggCharacters.map((egg) => (
           <motion.div
@@ -75,17 +77,18 @@ export default function CharacterSelection({onSelection}:{onSelection:Function})
 
             {/* Thought Bubble on Hover */}
             {hovered === egg.id && (
-              <motion.div
-                className="text-sm font-fredoka absolute -top-16 left-[14%] md:left-1/2 transform -translate-x-[1] md:-translate-x-1/2  w-40 bg-white text-black  rounded-lg shadow-lg p-2 text-center"
-                initial={{ opacity: 0, scale: 0.5, y: -10 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.5, y: -10 }}
-                transition={{ duration: 0.3 }}
-              >
-                {egg.dialogue}
-                {/* Thought Cloud Tail */}
-                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white rotate-45"></div>
-              </motion.div>
+              <ThoughtBubble text={egg?.dialogue}/>
+              // <motion.div
+              //   className="text-sm font-fredoka absolute -top-16 left-[14%] md:left-1/2 transform -translate-x-[1] md:-translate-x-1/2  w-40 bg-white text-black  rounded-lg shadow-lg p-2 text-center"
+              //   initial={{ opacity: 0, scale: 0.5, y: -10 }}
+              //   animate={{ opacity: 1, scale: 1, y: 0 }}
+              //   exit={{ opacity: 0, scale: 0.5, y: -10 }}
+              //   transition={{ duration: 0.3 }}
+              // >
+              //   {egg.dialogue}
+              //   {/* Thought Cloud Tail */}
+              //   <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white rotate-45"></div>
+              // </motion.div>
             )}
 
             {/* Selection Highlight Effect */}
@@ -100,6 +103,7 @@ export default function CharacterSelection({onSelection}:{onSelection:Function})
           </motion.div>
         ))}
       </motion.div>
+      </AnimatePresence>
       <audio ref={hoverRef} src="/assets/hover1.mp3" preload="auto"/>
     </div>
   );

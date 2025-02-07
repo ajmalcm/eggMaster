@@ -6,14 +6,17 @@ import Runny from "@/public/assets/runny-removebg-preview.png";
 import Soft from "@/public/assets/soft-removebg-preview.png";
 import Hard from "@/public/assets/hardegg-removebg-preview.png";
 import Over from "@/public/assets/overcokkedegg-removebg-preview.png";
+import Scared from "@/public/assets/scared.gif";
 import * as motion from "motion/react-client";
 import { useRouter } from "next/navigation";
+import { AnimatePresence } from "motion/react";
 
 const Recipe = ({ type }: { type: string }) => {
   const [instructions, setInstructions] = useState<string[]>([]);
   const [title, setTitle] = useState("");
   const [time, setTime] = useState("");
   const [icon, setIcon] = useState<string | any>();
+  const [run,setRun] = useState(false);
   const router = useRouter();
 
   const eggBoilingGuide = [
@@ -89,11 +92,15 @@ const Recipe = ({ type }: { type: string }) => {
   }, [type]);
 
   const startHandler = () => {
-    router.push(`/timer/${type}`);
+    setRun(true);
+    setTimeout(()=>{
+      router.push(`/timer/${type}`);
+    },600)
   };
 
   return (
-    <>
+    <div className="relative">
+    <AnimatePresence>
     <div className="max-w-md mx-auto bg-white shadow-lg rounded-xl p-6 mt-6 font-pixel_p2 text-xs flex flex-col gap-8">
       <motion.div
         initial={{ opacity: 0, translateY: -10 }}
@@ -140,7 +147,24 @@ const Recipe = ({ type }: { type: string }) => {
           START TIMER
         </button>
       </motion.div>
-    </>
+      { run &&
+      <motion.div
+        initial={{ opacity: 0.5, x: "-50%", y: "-50%" }} // Initially invisible
+        className="absolute top-[50%] left-0"
+        animate={run ? { opacity: 1, x: "70vw" } : { opacity: 0 }} // Fades in & moves
+        key="jlk"
+        transition={{
+          duration: 4,
+          ease: "easeInOut",
+          repeat: 1,
+          type: "spring",
+          stiffness: 10, // Adjust for bouncier effect
+        }}>
+          <Image src={Scared} alt="jjk" width={150} height={150} objectFit="contain"/>
+        </motion.div>
+      }
+    </AnimatePresence>
+    </div>
   );
 };
 

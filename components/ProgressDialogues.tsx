@@ -45,13 +45,7 @@ const ProgressDialogues = ({type}:{type:string}) => {
         }
       ];
 
-      const setMessages=()=>{
-
-      }
-
-      useEffect(()=>{
-
-      },)
+   
       
       
 

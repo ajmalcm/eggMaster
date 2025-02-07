@@ -5,7 +5,6 @@ import Recipe from '@/components/Recipe';
 
 const page = ({params}:{params:{type:string}}) => {
 
-    
     const type= params.type;
 
   return (
