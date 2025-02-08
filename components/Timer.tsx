@@ -8,6 +8,8 @@ import Scared from "@/public/assets/scared.gif";
 import Fork from "@/public/assets/fork.gif";
 import Image from "next/image";
 import Message from "./Message";
+import * as motion from "motion/react-client";
+import { useRouter } from "next/navigation";
 
 const Timer = ({ time, type }: { time: string; type: string }) => {
   const [secondsLeft, setSecondsLeft] = useState(0);
@@ -15,41 +17,13 @@ const Timer = ({ time, type }: { time: string; type: string }) => {
   const [gif, setGif] = useState(Boil);
   const [d1, setD1] = useState(false);
   const [d2, setD2] = useState(false);
+  const [d3, setD3] = useState(false);
   const [m1, setM1] = useState("");
   const [m2, setM2] = useState("");
+  const router=useRouter();
   let t1: ReturnType<typeof setTimeout>;
   let t2: ReturnType<typeof setTimeout>;
   let t3: ReturnType<typeof setTimeout>;
-  const eggDialogues = [
-    {
-      type: "Runny Yolk",
-      messages: [
-        "Oh, we’re keeping things dangerously runny? Living life on the edge, I see. 😏",
-        "One wrong move, and I’m oozing all over your plate like a poorly managed life decision. 🍳💥",
-      ],
-    },
-    {
-      type: "Soft-Boiled",
-      messages: [
-        "Ah, the Goldilocks of eggs—not too firm, not too runny. I see you have exquisite taste. 🎩✨",
-        "I could be in a Michelin-starred ramen bowl, or I could be your sad Tuesday breakfast. Fate is wild. 🍜🤷‍♂️",
-      ],
-    },
-    {
-      type: "Hard-Boiled",
-      messages: [
-        "Hard-boiled? Respect. I’m basically the ‘gym bro’ of eggs now. 💪🥚",
-        "You want nutrition and durability? You got it. Just don’t forget to peel me… gently. 😤",
-      ],
-    },
-    {
-      type: "Overcooked",
-      messages: [
-        "Buddy… you’re about to create something NASA might study. 🚀🥲",
-        "I hope you like your eggs with a side of existential dread because I am officially ruined. 😭🔥",
-      ],
-    },
-  ];
 
   useEffect(() => {
     // Convert "4-5 minutes" format to seconds (taking the lowest value)
@@ -65,6 +39,7 @@ const Timer = ({ time, type }: { time: string; type: string }) => {
         setSecondsLeft((prev) => prev - 1);
       }, 1000);
     } else if (secondsLeft === 0 && isRunning) {
+      setD3(true);
       if(type==="runny")
       {
         setM1("Welp, I survived… but I’m still a bit wobbly inside. 😵‍💫")
@@ -157,6 +132,10 @@ const Timer = ({ time, type }: { time: string; type: string }) => {
     clearTimeout(t2);
     clearTimeout(t3);
   };
+
+  const goHomehandler=()=>{
+    router.push("/");
+  }
   
   return (
     <div className="text-center mt-4">
@@ -197,6 +176,23 @@ const Timer = ({ time, type }: { time: string; type: string }) => {
           objectFit="contain"
         />
       </div>
+      {d3 && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0 }}
+                  key="box2"
+                  className="w-full flex justify-center items-center"
+                >
+                  <button
+                    onClick={goHomehandler}
+                    type="button"
+                    className="bg-blue-400 outline-none border-none rounded-md p-3 text-xs text-white font-pixel_p2 my-3 "
+                  >
+                    Go Home
+                  </button>
+                </motion.div>
+              )}
     </div>
   );
 };
